@@ -1,1 +1,1 @@
-fastapi[stamdard]
+fastapi[all]

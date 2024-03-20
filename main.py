@@ -17,21 +17,39 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/getPassword/{fuente}")
-async def fetch_api_key_caja(fuente: str):
+@app.get("/getPassword")
+async def fetch_api_key_caja():
+    api_key_names = [
+        'API_KEY_TERMINAL_CAJA',
+        'API_KEY_TERMINAL_TAPA',
+        'API_KEY_TERMINAL_ADMIN',
+    ]
     api_key = None
     
-    if fuente == 'caja':
-        api_key = os.getenv("API_KEY_TERMINAL_CAJA")
-    elif fuente == 'tapa':
-        api_key = os.getenv("API_KEY_TERMINAL_TAPA")
-    elif fuente == 'admin':
-        api_key = os.getenv("API_KEY_TERMINAL_ADMIN")
-    
+    for key_name in api_key_names:
+        api_key = os.getenv(key_name)
+        if api_key: break
+
     if not api_key:
         raise HTTPException(status_code=404, detail="API key not found")
     
     return {"api_key": api_key}
+
+# @app.get("/getPassword/{fuente}")
+# async def fetch_api_key_caja(fuente: str):
+#     api_key = None
+    
+#     if fuente == 'caja':
+#         api_key = os.getenv("API_KEY_TERMINAL_CAJA")
+#     elif fuente == 'tapa':
+#         api_key = os.getenv("API_KEY_TERMINAL_TAPA")
+#     elif fuente == 'admin':
+#         api_key = os.getenv("API_KEY_TERMINAL_ADMIN")
+    
+#     if not api_key:
+#         raise HTTPException(status_code=404, detail="API key not found")
+    
+#     return {"api_key": api_key}
 
 if __name__ == '__main__':
     uvicorn.run("main:app", port=3001, reload=True)
