@@ -8,5 +8,7 @@ COPY ./requirements.txt .
 # Instalamos requerimientos principales
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
+COPY ./main.py .
+
 # Exponemos el puerto 5000
 EXPOSE 5000
