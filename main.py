@@ -3,6 +3,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 from dotenv import load_dotenv
+from LCDControl.lcd_router import router as lcdrouter
 
 load_dotenv()
 
@@ -16,6 +17,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(lcdrouter, prefix='/lcd', tags=['LCD'])
 
 @app.get("/getPassword")
 async def fetch_api_key_caja():

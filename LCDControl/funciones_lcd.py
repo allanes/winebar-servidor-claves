@@ -1,7 +1,7 @@
 import time
 from pydantic import BaseModel
 import Adafruit_CharLCD as LCD
-from raspi_config import raspi_pin_config
+from .raspi_config import raspi_pin_config
 
 class InfoCliente(BaseModel):
     nombre: str
@@ -30,6 +30,9 @@ def print_info_cliente(lcd: LCD, info: InfoCliente):
 
     mensaje = info.armar_mensaje()
     lcd.message(mensaje)
+
+def limpiar_pantalla(lcd: LCD):
+    lcd.clear()
 
 def print_one_line_message(lcd: LCD, msg: str, line: int = 0):
     lcd.clear()
