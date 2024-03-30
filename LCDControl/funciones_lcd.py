@@ -1,10 +1,9 @@
 import time
-from dataclasses import dataclass
+from pydantic import BaseModel
 import Adafruit_CharLCD as LCD
 from raspi_config import raspi_pin_config
 
-@dataclass
-class InfoCliente():
+class InfoCliente(BaseModel):
     nombre: str
     consumos: float
     carrito: float = 0
