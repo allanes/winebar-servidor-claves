@@ -2,3 +2,4 @@ fastapi[all]
 git+https://github.com/adafruit/Adafruit_CircuitPython_CharLCD.git
 RPi.GPIO
 evdev
+requests
