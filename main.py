@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 from dotenv import load_dotenv
 from LCDControl.lcd_router import router as lcdrouter
-
+from RFIDControl.rfid_router import router as lectores_router, start_keyboard_threads
 load_dotenv()
 
 app = FastAPI()
@@ -19,6 +19,11 @@ app.add_middleware(
 )
 
 app.include_router(lcdrouter, prefix='/lcd', tags=['LCD'])
+app.include_router(lectores_router, prefix='/lectores-rfid', tags=['Lectores RFID'])
+
+@app.on_event("startup")
+async def startup_event():
+    start_keyboard_threads()
 
 @app.get("/getPassword")
 async def fetch_api_key_caja():
