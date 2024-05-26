@@ -60,4 +60,4 @@ async def fetch_api_key_caja():
 #     return {"api_key": api_key}
 
 if __name__ == '__main__':
-    uvicorn.run("main:app", port=3001, reload=True)
+    uvicorn.run("main:app", port=3001, reload=True, host='0.0.0.0')
