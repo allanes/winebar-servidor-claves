@@ -33,6 +33,14 @@ def print_info_cliente(lcd: LCD, info: InfoCliente):
 
 def limpiar_pantalla(lcd: LCD):
     lcd.clear()
+    linea1 = centrar_linea('ALTACAVA WINEBAR')
+    linea2 = ''
+    linea3 = centrar_linea('Bienvenido!')
+    linea4 = ''
+
+    mensaje_bienvenida = linea1 + '\n' + linea2 + '\n' + linea3 + '\n' + linea4
+
+    lcd.message(mensaje_bienvenida)
 
 def print_one_line_message(lcd: LCD, msg: str, line: int = 0):
     lcd.clear()
