@@ -3,7 +3,8 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 from dotenv import load_dotenv
-
+from LCDControl.lcd_router import router as lcdrouter
+from RFIDControl.rfid_router import router as lectores_router, start_keyboard_threads
 load_dotenv()
 
 app = FastAPI()
@@ -16,6 +17,13 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(lcdrouter, prefix='/lcd', tags=['LCD'])
+app.include_router(lectores_router, prefix='/lectores-rfid', tags=['Lectores RFID'])
+
+@app.on_event("startup")
+async def startup_event():
+    start_keyboard_threads()
 
 @app.get("/getPassword")
 async def fetch_api_key_caja():
@@ -52,4 +60,4 @@ async def fetch_api_key_caja():
 #     return {"api_key": api_key}
 
 if __name__ == '__main__':
-    uvicorn.run("main:app", port=3001, reload=True)
+    uvicorn.run("main:app", port=3001, reload=True, host='0.0.0.0')
